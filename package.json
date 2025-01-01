@@ -1,0 +1,61 @@
+{
+  "name": "@shellicar/svelte-adapter-azure-functions",
+  "version": "0.1.0",
+  "description": "Svelt adapter for Azure Function Apps",
+  "files": ["dist"],
+  "type": "module",
+  "scripts": {
+    "build": "tsup-node",
+    "dev": "tsup-node --watch",
+    "test": "vitest",
+    "lint": "biome lint",
+    "format": "biome format",
+    "check": "biome check",
+    "ci": "biome ci",
+    "ci:fix": "biome check --fix --diagnostic-level=error",
+    "updates": "npm-check-updates",
+    "prepublishOnly": "run-p build test ci",
+    "postpublish": "pnpm version --no-git-tag-version patch"
+  },
+  "keywords": ["svelte", "azure", "azure functions", "adapter"],
+  "author": "Stephen Hellicar",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/shellicar/svelte-adapter-azure-functions/issues"
+  },
+  "homepage": "https://github.com/shellicar/svelte-adapter-azure-functions#readme",
+  "exports": {
+    ".": {
+      "types": "./src/index.ts",
+      "import": "./dist/index.js",
+      "require": "./dist/index.cjs"
+    }
+  },
+  "devDependencies": {
+    "@biomejs/biome": "^1.9.4",
+    "@types/node": "^22.10.3",
+    "@types/set-cookie-parser": "^2.4.10",
+    "esbuild": "^0.24.2",
+    "escape-string-regexp": "^5.0.0",
+    "npm-check-updates": "^17.1.13",
+    "npm-run-all2": "^7.0.2",
+    "terser": "^5.37.0",
+    "tsup": "^8.3.5",
+    "tsx": "^4.19.2",
+    "typescript": "^5.7.2",
+    "vitest": "^2.1.8"
+  },
+  "pnpm": {
+    "overrides": {
+      "@sveltejs/vite-plugin-svelte": "^5.0.3",
+      "vite": "^6.0.6",
+      "cookie": "0.7.0"
+    }
+  },
+  "dependencies": {
+    "@azure/functions": "^4.6.0",
+    "@sveltejs/kit": "^2.15.1",
+    "set-cookie-parser": "^2.7.1"
+  },
+  "packageManager": "pnpm@9.15.2+sha512.93e57b0126f0df74ce6bff29680394c0ba54ec47246b9cf321f0121d8d9bb03f750a705f24edc3c1180853afd7c2c3b94196d0a3d53d3e069d9e2793ef11f321"
+}

@@ -3,10 +3,10 @@ import { join, posix } from 'node:path';
 import { fileURLToPath } from 'node:url';
 import type { Adapter, Builder } from '@sveltejs/kit';
 import { type BuildOptions, build } from 'esbuild';
+import { defaults } from './defaults';
 
 export interface AzureFunctionsAdapterOptions {
   esbuildOptions?: BuildOptions;
-  debug?: boolean;
 }
 
 export const createAdapter = (options: AzureFunctionsAdapterOptions = {}): Adapter => {
@@ -45,16 +45,7 @@ export const createAdapter = (options: AzureFunctionsAdapterOptions = {}): Adapt
       await build({
         entryPoints: [`${tmp}/trigger.js`],
         outdir: join(serverDir, 'dist'),
-        bundle: true,
-        platform: 'node',
-        target: 'node20',
-        treeShaking: true,
-        format: 'esm',
-        splitting: true,
-        minify: true,
-        keepNames: true,
-        sourcemap: true,
-        outExtension: { '.js': '.mjs' },
+        ...defaults,
         ...esbuildOptions,
       });
 

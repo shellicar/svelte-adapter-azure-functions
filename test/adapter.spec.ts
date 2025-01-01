@@ -1,10 +1,11 @@
 import type { Builder } from '@sveltejs/kit';
-import { type Mock, describe, expect, it, vi } from 'vitest';
+import type { BuildOptions, BuildResult } from 'esbuild';
+import { build } from 'esbuild';
+import { type Mock, beforeEach, describe, expect, it, vi } from 'vitest';
 import { createAdapter } from '../src/adapter';
 
 vi.mock('node:fs', () => ({
   writeFileSync: vi.fn(),
-  existsSync: vi.fn(() => true),
 }));
 
 vi.mock('esbuild', () => ({
@@ -16,12 +17,13 @@ const getMockBuilder = () => {
   const log = vi.fn() as Mock & Record<LogMethods, Mock>;
   log.minor = vi.fn();
   log.warn = vi.fn();
+  log.info = vi.fn();
 
   return {
     log,
     copy: vi.fn(),
     generateManifest: vi.fn(() => '{}'),
-    getBuildDirectory: vi.fn((name) => `build/${name}`),
+    getBuildDirectory: vi.fn((name: string) => `build/${name}`),
     getServerDirectory: vi.fn(() => 'server'),
     rimraf: vi.fn(),
     writeClient: vi.fn(),
@@ -30,21 +32,49 @@ const getMockBuilder = () => {
 };
 
 describe('adapter', () => {
+  beforeEach(() => {
+    vi.clearAllMocks();
+  });
+
   it('creates valid adapter', () => {
     const adapter = createAdapter();
     expect(adapter.name).toBe('adapter-azure-functions');
   });
 
-  it('configures build correctly', async () => {
+  it('calls esbuild', async () => {
+    const adapter = createAdapter();
+    const builder = getMockBuilder();
+
+    await adapter.adapt(builder);
+
+    expect(build).toHaveBeenCalledOnce();
+  });
+
+  it('calls esbuild with options #1', async () => {
+    const expected = {
+      minify: false,
+    };
     const adapter = createAdapter({
-      esbuildOptions: { minify: false },
+      esbuildOptions: expected,
     });
     const builder = getMockBuilder();
 
     await adapter.adapt(builder);
 
-    expect(builder.writeClient).toHaveBeenCalledWith(expect.stringContaining('static'));
-    expect(builder.writePrerendered).toHaveBeenCalledWith(expect.stringContaining('static'));
-    expect(builder.copy).toHaveBeenCalledTimes(2);
+    expect(build).toHaveBeenCalledWith(expect.objectContaining(expected));
+  });
+
+  it('calls esbuild with options #2', async () => {
+    const expected = {
+      minify: true,
+    };
+    const adapter = createAdapter({
+      esbuildOptions: expected,
+    });
+    const builder = getMockBuilder();
+
+    await adapter.adapt(builder);
+
+    expect(build).toHaveBeenCalledWith(expect.objectContaining(expected));
   });
 });

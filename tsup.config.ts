@@ -17,7 +17,7 @@ export default defineConfig((config) => ({
   inject: ['cjs-shim.mts'],
   tsconfig: 'tsconfig.json',
   target: 'node20',
-  format: ['esm', 'cjs'],
+  format: ['esm'],
   outDir: 'dist',
   ...config,
 }));

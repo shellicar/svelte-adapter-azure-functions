@@ -14,20 +14,24 @@ export const createAdapter = (options: AzureFunctionsAdapterOptions = {}): Adapt
     name: 'adapter-azure-functions',
     async adapt(builder: Builder) {
       const { esbuildOptions = {} } = options;
-      const buildDir = 'build';
+      const publish = 'build';
       const tmp = builder.getBuildDirectory('adapter-azure-functions');
-      const serverDir = join(buildDir, 'server');
-      const staticDir = join(buildDir, 'static');
+      const serverDir = join(publish, 'server');
+      const staticDir = join(publish, 'static');
 
-      builder.rimraf(buildDir);
+      builder.log.minor(`Publishing to "${publish}"`);
+      builder.rimraf(publish);
       builder.rimraf(tmp);
 
+      builder.log.minor('Copying assets...');
       builder.writeClient(staticDir);
       builder.writePrerendered(staticDir);
 
       const distFiles = fileURLToPath(new URL('../dist', import.meta.url));
 
       const relativePath = posix.relative(tmp, join(builder.getServerDirectory()));
+
+      builder.log.minor('Generating serverless function...');
       builder.copy(distFiles, tmp, {
         replace: {
           MANIFEST: './manifest.js',
@@ -37,6 +41,7 @@ export const createAdapter = (options: AzureFunctionsAdapterOptions = {}): Adapt
       });
 
       writeFileSync(`${tmp}/manifest.js`, `export const manifest = ${builder.generateManifest({ relativePath })};\n`);
+
       await build({
         entryPoints: [`${tmp}/trigger.js`],
         outdir: join(serverDir, 'dist'),
@@ -54,7 +59,7 @@ export const createAdapter = (options: AzureFunctionsAdapterOptions = {}): Adapt
       });
 
       const copyFiles = fileURLToPath(new URL('../files', import.meta.url));
-      console.log('copy', copyFiles, 'to', serverDir);
+      builder.log.minor('Copying files to server directory');
       builder.copy(copyFiles, serverDir);
     },
   };

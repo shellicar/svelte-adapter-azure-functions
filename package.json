@@ -2,7 +2,7 @@
   "name": "@shellicar/svelte-adapter-azure-functions",
   "version": "0.1.1",
   "description": "Svelt adapter for Azure Function Apps",
-  "files": ["dist","files"],
+  "files": ["dist", "files"],
   "type": "module",
   "scripts": {
     "build": "tsup-node",

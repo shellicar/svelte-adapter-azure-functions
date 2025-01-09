@@ -32,8 +32,7 @@ export const getClientIPFromHeaders = (headers: Headers): string => {
  * Gets the client principal from `x-ms-client-principal` header.
  */
 export function getClientPrincipalFromHeaders(headers: Headers): ClientPrincipal | undefined {
-  // Code adapted from the official SWA documentation
-  // https://learn.microsoft.com/en-us/azure/static-web-apps/user-information?tabs=javascript#api-functions
+  // https://learn.microsoft.com/en-us/azure/app-service/configure-authentication-user-identities#decoding-the-client-principal-header
   const header = headers.get('x-ms-client-principal');
   if (!header) {
     return undefined;
@@ -41,7 +40,7 @@ export function getClientPrincipalFromHeaders(headers: Headers): ClientPrincipal
 
   try {
     const encoded = Buffer.from(header, 'base64');
-    const decoded = encoded.toString('ascii');
+    const decoded = encoded.toString('utf-8');
     const clientPrincipal = JSON.parse(decoded);
 
     return clientPrincipal;

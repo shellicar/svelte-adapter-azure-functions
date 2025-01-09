@@ -1,4 +1,3 @@
-import escapeStringRegexp from 'escape-string-regexp';
 import { defineConfig } from 'tsup';
 
 export default defineConfig((config) => ({

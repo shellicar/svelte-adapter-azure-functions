@@ -64,9 +64,6 @@ importers:
       esbuild:
         specifier: ^0.24.2
         version: 0.24.2
-      set-cookie-parser:
-        specifier: ^2.7.1
-        version: 2.7.1
     devDependencies:
       '@azure/functions':
         specifier: ^4.6.0
@@ -83,6 +80,9 @@ importers:
       escape-string-regexp:
         specifier: ^5.0.0
         version: 5.0.0
+      set-cookie-parser:
+        specifier: ^2.7.1
+        version: 2.7.1
       terser:
         specifier: ^5.37.0
         version: 5.37.0

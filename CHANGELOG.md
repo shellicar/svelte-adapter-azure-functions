@@ -1,5 +1,11 @@
 # Changelog
 
+## [0.2.1] - 2025-01-09
+
+### Fixed
+
+- Fix issue with `set-cookie-parser` not being bundled
+
 ## [0.2.0] - 2025-01-09
 
 ### Fixed

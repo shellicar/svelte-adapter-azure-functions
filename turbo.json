@@ -1,10 +1,30 @@
 {
   "$schema": "https://turbo.build/schema.json",
-  "extends": ["//"],
+  "ui": "tui",
+  "daemon": false,
   "tasks": {
     "build": {
-      "inputs": ["src/**", "files/**", "*.mts", "*.ts", "*.json"],
+      "dependsOn": ["^build"],
+      "inputs": ["tsconfig.json", "**/*.ts"],
       "outputs": ["dist"]
+    },
+    "dev": {
+      "cache": false,
+      "persistent": true
+    },
+    "start": {
+      "dependsOn": ["build"],
+      "cache": false,
+      "persistent": true
+    },
+    "test": {
+      "dependsOn": ["^build"],
+      "outputs": []
+    },
+    "type-check": {
+      "dependsOn": ["^build"],
+      "inputs": ["tsconfig.check.json"],
+      "outputs": ["**/node_modules/.cache/tsbuildinfo.json"]
     }
   }
 }

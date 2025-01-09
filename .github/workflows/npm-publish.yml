@@ -9,9 +9,11 @@ on:
 
 jobs:
   build:
-    runs-on: ubuntu-latest
+    runs-on: ubuntu-24.04
     steps:
       - uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
       - uses: pnpm/action-setup@v4
       - uses: actions/setup-node@v4
         with:
@@ -20,8 +22,10 @@ jobs:
           cache: 'pnpm'
       - run: pnpm i --frozen-lockfile
       - run: pnpm run --if-present build
-      - run: pnpm run test
+      - run: pnpm run --if-present test
       - run: pnpm run ci
-      - run: pnpm publish --ignore-scripts --no-git-checks
+      - run: |
+          cd "packages/$(cat .packagename)"
+          pnpm publish --ignore-scripts --no-git-checks
         env:
           NODE_AUTH_TOKEN: ${{secrets.npm_token}}

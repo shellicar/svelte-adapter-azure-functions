@@ -9,6 +9,34 @@
 
 A [SvelteKit adapter](https://kit.svelte.dev/docs/adapters) that builds your app into an Azure Function.
 
+## Features
+
+- ⚡ Builds an Azure Function with v4 of the Node.js programming model
+- 🔐 Passes Azure Function's [ClientPrincipal] to server routes
+- 🛠️ Passes Azure Function's [InvocationContext] to server routes
+- 📦 Zero configuration required
+
+## Installation & Quick Start
+
+```sh
+npm i --save @shellicar/svelte-adapter-azure-functions
+```
+
+```sh
+pnpm add @shellicar/svelte-adapter-azure-functions
+```
+
+```js
+// svelte.config.js
+import adapter from '@shellicar/svelte-adapter-azure-functions';
+
+export default {
+  kit: {
+    adapter: adapter()
+  }
+};
+```
+
 <!-- BEGIN_ECOSYSTEM -->
 
 ## @shellicar TypeScript Ecosystem
@@ -51,23 +79,6 @@ app.http('server', {
 });
 ```
 
-## Usage
-
-```bash
-pnpm add -D @shellicar/svelte-adapter-azure-functions
-```
-
-In `svelte.config.js`:
-```js
-import adapter from '@shellicar/svelte-adapter-azure-functions';
-
-export default {
-  kit: {
-    adapter: adapter()
-  }
-};
-```
-
 ## Configuration
 
 ### esbuildOptions
@@ -81,6 +92,7 @@ adapter({
 ```
 
 Default options in [defaults.ts](./src/defaults.ts):
+
 ```typescript
 export const defaults = {
   bundle: true,
@@ -91,12 +103,31 @@ export const defaults = {
 };
 ```
 
+## Output
+
+```text
+build/
+├── server/
+│   ├── dist/            # Server-side app
+│   │   ├── *.mjs        # Server-side chunks and routes
+│   │   └── trigger.mjs  # Azure Function HTTP trigger
+│   ├── host.json        # Function configuration
+│   └── package.json     # Function dependencies
+└── static/
+    └── _app/            # Client-side assets
+```
+
 ## Credits
 
-* [svelte-adapter-azure-swa](https://github.com/geoffrich/svelte-adapter-azure-swa)
-* [esbuild-azure-functions](https://github.com/beyerleinf/esbuild-azure-functions)
+- [svelte-adapter-azure-swa]
+- [esbuild-azure-functions]
 
 [azure-functions]: https://learn.microsoft.com/azure/azure-functions/functions-reference-node?tabs=typescript%2Cwindows%2Cazure-cli&pivots=nodejs-model-v4
 [sveltekit]: https://kit.svelte.dev
 [typescript]: https://www.typescriptlang.org
 [biome]: https://biomejs.dev
+
+[svelte-adapter-azure-swa]: https://github.com/geoffrich/svelte-adapter-azure-swa
+[esbuild-azure-functions]: https://github.com/beyerleinf/esbuild-azure-functions
+[InvocationContext]: https://learn.microsoft.com/en-us/azure/azure-functions/functions-reference-node?tabs=javascript%2Cwindows%2Cazure-cli&pivots=nodejs-model-v4#invocation-context
+[ClientPrincipal]: https://learn.microsoft.com/en-us/azure/app-service/configure-authentication-user-identities#decoding-the-client-principal-header

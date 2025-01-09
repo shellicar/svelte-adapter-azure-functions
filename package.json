@@ -1,64 +1,35 @@
 {
-  "name": "@shellicar/svelte-adapter-azure-functions",
-  "version": "0.1.1",
-  "description": "Svelt adapter for Azure Function Apps",
-  "files": ["dist", "files"],
-  "type": "module",
+  "private": true,
+  "packageManager": "pnpm@9.15.3+sha512.1f79bc245a66eb0b07c5d4d83131240774642caaa86ef7d0434ab47c0d16f66b04e21e0c086eb61e62c77efc4d7f7ec071afad3796af64892fae66509173893a",
   "scripts": {
-    "build": "tsup-node",
-    "dev": "tsup-node --watch",
-    "test": "vitest",
-    "test:ci": "vitest run",
+    "build": "turbo run build",
+    "dev": "turbo run dev",
+    "start": "turbo run start",
+    "test": "turbo run test",
+    "type-check": "turbo run type-check",
     "lint": "biome lint",
     "format": "biome format",
     "check": "biome check",
-    "ci": "biome ci",
-    "ci:fix": "biome check --fix --diagnostic-level=error",
-    "updates": "npm-check-updates",
+    "ci": "biome ci --diagnostic-level=error",
+    "ci:fix": "biome check --diagnostic-level=error --fix",
+    "list-mismatches": "syncpack list-mismatches",
+    "fix-mismatches": "syncpack fix-mismatches",
+    "updates": "npm-check-updates --workspaces",
     "postinstall": "lefthook install",
-    "prepublishOnly": "run-s build test:ci ci",
-    "postpublish": "pnpm version --no-git-tag-version patch"
-  },
-  "keywords": ["svelte", "azure", "azure functions", "adapter"],
-  "author": "Stephen Hellicar",
-  "license": "MIT",
-  "bugs": {
-    "url": "https://github.com/shellicar/svelte-adapter-azure-functions/issues"
-  },
-  "homepage": "https://github.com/shellicar/svelte-adapter-azure-functions#readme",
-  "exports": {
-    ".": {
-      "types": "./src/index.ts",
-      "import": "./dist/index.js",
-      "require": "./dist/index.cjs"
-    }
+    "verify-version": "./scripts/verify-version.sh"
   },
   "devDependencies": {
     "@biomejs/biome": "^1.9.4",
-    "@types/node": "^22.10.5",
-    "@types/set-cookie-parser": "^2.4.10",
-    "esbuild": "^0.24.2",
-    "escape-string-regexp": "^5.0.0",
     "lefthook": "^1.10.1",
     "npm-check-updates": "^17.1.13",
-    "npm-run-all2": "^7.0.2",
-    "terser": "^5.37.0",
-    "tsup": "^8.3.5",
-    "tsx": "^4.19.2",
-    "typescript": "^5.7.2",
-    "vitest": "^2.1.8"
+    "syncpack": "^13.0.0",
+    "turbo": "^2.3.3"
   },
   "pnpm": {
     "overrides": {
       "@sveltejs/vite-plugin-svelte": "^5.0.3",
-      "vite": "^6.0.6",
+      "vite": "^6.0.7",
       "cookie": "0.7.0"
     }
-  },
-  "dependencies": {
-    "@azure/functions": "^4.6.0",
-    "@sveltejs/kit": "^2.15.1",
-    "set-cookie-parser": "^2.7.1"
-  },
-  "packageManager": "pnpm@9.15.3+sha512.1f79bc245a66eb0b07c5d4d83131240774642caaa86ef7d0434ab47c0d16f66b04e21e0c086eb61e62c77efc4d7f7ec071afad3796af64892fae66509173893a"
+  }
 }

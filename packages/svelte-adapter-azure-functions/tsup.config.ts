@@ -1,9 +1,6 @@
 import escapeStringRegexp from 'escape-string-regexp';
 import { defineConfig } from 'tsup';
 
-const excludeFromBundle = ['@azure/functions-core', 'MANIFEST', 'SERVER', 'SHIMS', 'esbuild'].map(escapeStringRegexp);
-const noExternal = [new RegExp(`^(?!(${excludeFromBundle.join('|')})$)`)];
-
 export default defineConfig((config) => ({
   entry: ['src/**/*.ts'],
   splitting: true,
@@ -13,7 +10,7 @@ export default defineConfig((config) => ({
   minify: config.watch ? false : 'terser',
   keepNames: true,
   bundle: true,
-  noExternal,
+  external: ['@azure/functions-core', 'SHIMS', 'MANIFEST', 'SERVER', 'esbuild'],
   inject: ['cjs-shim.mts'],
   tsconfig: 'tsconfig.json',
   target: 'node20',

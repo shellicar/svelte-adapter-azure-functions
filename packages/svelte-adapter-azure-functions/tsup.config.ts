@@ -2,11 +2,11 @@ import { defineConfig } from 'tsup';
 
 export default defineConfig((config) => ({
   entry: ['src/**/*.ts'],
-  splitting: false, //true,
+  splitting: true,
   sourcemap: true,
   dts: true,
   clean: true,
-  minify: false, //config.watch ? false : 'terser',
+  minify: config.watch ? false : 'terser',
   keepNames: true,
   bundle: true,
   cjsInterop: true,

@@ -1,21 +1,30 @@
-import { defineConfig } from 'tsup';
+import cleanPlugin from '@shellicar/build-clean/esbuild';
+import { defineConfig, type Options } from 'tsup';
 
-export default defineConfig((config) => ({
-  entry: ['src/**/*.ts'],
-  splitting: true,
-  sourcemap: true,
-  dts: true,
-  clean: true,
-  minify: config.watch ? false : 'terser',
-  keepNames: true,
-  bundle: true,
-  cjsInterop: true,
-  removeNodeProtocol: true,
-  external: ['@azure/functions-core', 'SHIMS', 'MANIFEST', 'SERVER', 'esbuild'],
-  inject: ['cjs-shim.mts'],
-  tsconfig: 'tsconfig.json',
-  target: 'node20',
-  format: ['esm'],
-  outDir: 'dist',
-  ...config,
-}));
+const commonOptions = (config: Options) =>
+  ({
+    bundle: true,
+    cjsInterop: true,
+    clean: false,
+    dts: true,
+    entry: ['src/**/*.ts'],
+    external: ['@azure/functions-core', 'SHIMS', 'MANIFEST', 'SERVER', 'esbuild'],
+    esbuildPlugins: [cleanPlugin({ destructive: true })],
+    inject: ['cjs-shim.mts'],
+    keepNames: true,
+    minify: config.watch ? false : 'terser',
+    removeNodeProtocol: false,
+    sourcemap: true,
+    splitting: true,
+    target: 'node22',
+    treeshake: true,
+    tsconfig: 'tsconfig.json',
+  }) satisfies Options;
+
+export default defineConfig((config) => [
+  {
+    ...commonOptions(config),
+    format: 'esm',
+    outDir: 'dist',
+  },
+]);

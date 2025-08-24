@@ -1,5 +1,11 @@
 # Changelog
 
+## [1.0.0] - 2025-08-24
+
+### Changes
+
+- Updated all dependencies to latest versions
+
 ## [0.4.0] - 2025-08-03
 
 ### Changes
@@ -40,6 +46,7 @@
 
 - Initial release.
 
+[1.0.0]: https://github.com/shellicar/svelte-adapter-azure-functions/releases/tag/1.0.0
 [0.4.0]: https://github.com/shellicar/svelte-adapter-azure-functions/releases/tag/0.4.0
 [0.3.0]: https://github.com/shellicar/svelte-adapter-azure-functions/releases/tag/0.3.0
 [0.2.2]: https://github.com/shellicar/svelte-adapter-azure-functions/releases/tag/0.2.2

@@ -1,7 +1,7 @@
 import type { Builder } from '@sveltejs/kit';
 import type { BuildOptions, BuildResult } from 'esbuild';
 import { build } from 'esbuild';
-import { type Mock, beforeEach, describe, expect, it, vi } from 'vitest';
+import { beforeEach, describe, expect, it, type Mock, vi } from 'vitest';
 import { createAdapter } from '../src/adapter';
 
 vi.mock('node:fs', () => ({

@@ -1,7 +1,7 @@
 {
   "name": "@shellicar/svelte-adapter-azure-functions",
   "private": false,
-  "version": "1.0.0",
+  "version": "1.0.1",
   "type": "module",
   "license": "MIT",
   "author": "Stephen Hellicar",
@@ -42,19 +42,19 @@
     }
   },
   "devDependencies": {
-    "@azure/functions": "^4.7.3",
-    "@shellicar/build-clean": "1.0.0-preview.5",
-    "@sveltejs/kit": "^2.36.2",
-    "@types/node": "^24.3.0",
+    "@azure/functions": "^4.8.0",
+    "@shellicar/build-clean": "1.1.2",
+    "@sveltejs/kit": "^2.47.3",
+    "@types/node": "^24.9.1",
     "@types/set-cookie-parser": "^2.4.10",
     "set-cookie-parser": "^2.7.1",
-    "terser": "^5.43.1",
+    "terser": "^5.44.0",
     "tsup": "^8.5.0",
-    "tsx": "^4.20.5",
-    "typescript": "^5.9.2",
-    "vitest": "^3.2.4"
+    "tsx": "^4.20.6",
+    "typescript": "^5.9.3",
+    "vitest": "^4.0.2"
   },
   "dependencies": {
-    "esbuild": "^0.25.9"
+    "esbuild": "^0.25.11"
   }
 }

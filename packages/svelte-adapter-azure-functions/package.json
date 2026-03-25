@@ -25,7 +25,8 @@
   },
   "files": [
     "dist",
-    "files"
+    "files",
+    "*.md"
   ],
   "scripts": {
     "build": "tsup",
@@ -36,7 +37,7 @@
   "exports": {
     ".": {
       "import": {
-        "typess": "./dist/index.d.ts",
+        "types": "./dist/index.d.ts",
         "default": "./dist/index.js"
       }
     }
